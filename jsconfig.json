@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@pos-saas/shared-schemas": ["../../packages/shared-schemas/src/index.js"],
+      "@pos-saas/shared-schemas/*": ["../../packages/shared-schemas/src/*.js"]
+    }
+  },
+  "include": [
+    "src-saas/**/*.js",
+    "src-saas/**/*.jsx",
+    "../../packages/shared-schemas/src/**/*.js"
+  ],
+  "exclude": ["node_modules", "dist", "src/**"]
+}

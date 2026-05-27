@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-primary: #2563eb;
+    --brand-primary-dark: #1d4ed8;
+    --brand-secondary: #0f172a;
+    --brand-accent: #16a34a;
+    --brand-ring: rgba(37, 99, 235, 0.16);
+    --brand-soft: rgba(37, 99, 235, 0.1);
+    --brand-border: rgba(37, 99, 235, 0.35);
+  }
+
+  body {
+    @apply min-h-screen bg-stone-100 text-stone-900 antialiased;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-3xl border border-stone-200 bg-white shadow-panel;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm text-stone-900 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100;
+  }
+
+  .textarea-field {
+    @apply field min-h-[112px] resize-y;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-2xl bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-2xl border border-stone-300 bg-white px-5 py-3 text-sm font-semibold text-stone-700 transition hover:border-brand-300 hover:text-brand-700;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-2xl border border-rose-200 bg-rose-50 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:border-rose-300 hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-stone-300 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-stone-500 transition hover:border-brand-300 hover:text-brand-700;
+  }
+
+  .chip-active {
+    @apply border-brand-300 bg-brand-50 text-brand-700;
+  }
+
+  .table-shell {
+    @apply overflow-hidden rounded-3xl border border-stone-200 bg-white;
+  }
+
+  .table-base {
+    @apply min-w-full divide-y divide-stone-200 text-sm;
+  }
+
+  .table-base thead {
+    @apply bg-stone-50;
+  }
+
+  .table-base th {
+    @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.18em] text-stone-500;
+  }
+
+  .table-base td {
+    @apply px-4 py-3 align-top text-stone-700;
+  }
+
+  .table-base tbody tr {
+    @apply border-t border-stone-100;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-100 text-emerald-700;
+  }
+
+  .badge-muted {
+    @apply badge bg-stone-100 text-stone-600;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-100 text-amber-700;
+  }
+}
+
+@layer utilities {
+  .bg-brand-50 {
+    background-color: var(--brand-soft) !important;
+  }
+
+  .bg-brand-600 {
+    background-color: var(--brand-primary) !important;
+  }
+
+  .hover\:bg-brand-700:hover {
+    background-color: var(--brand-primary-dark) !important;
+  }
+
+  .text-brand-600,
+  .text-brand-700,
+  .hover\:text-brand-700:hover {
+    color: var(--brand-primary) !important;
+  }
+
+  .border-brand-300,
+  .hover\:border-brand-300:hover {
+    border-color: var(--brand-border) !important;
+  }
+
+  .focus\:border-brand-500:focus {
+    border-color: var(--brand-primary) !important;
+  }
+
+  .focus\:ring-brand-100:focus {
+    --tw-ring-color: var(--brand-ring) !important;
+  }
+}

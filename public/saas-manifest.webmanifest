@@ -1,0 +1,25 @@
+{
+  "name": "POS SaaS",
+  "short_name": "POS SaaS",
+  "description": "Punto de venta + CarWash multi-tenant",
+  "start_url": "/saas.html#/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f5f4",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "/saas-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/saas-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

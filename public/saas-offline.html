@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sin conexion - POS SaaS</title>
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f5f5f4;
+    color: #1c1917;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    max-width: 440px;
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    text-align: center;
+  }
+  h1 {
+    color: #0f766e;
+    margin: 0 0 12px 0;
+  }
+  p {
+    color: #57534e;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+  }
+  button {
+    background: #0f766e;
+    color: white;
+    border: 0;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .badge {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <span class="badge">SIN CONEXION</span>
+  <h1>No hay internet</h1>
+  <p>
+    Estas trabajando sin conexion. Las ventas en efectivo que registres
+    durante este modo se guardan localmente y se sincronizan automaticamente
+    cuando vuelva la red.
+  </p>
+  <p>
+    Si necesitas reintentar conectarte ahora, presiona el boton:
+  </p>
+  <button onclick="location.reload()">Reintentar</button>
+</div>
+</body>
+</html>
