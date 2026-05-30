@@ -62,7 +62,7 @@ function PublicOrderStatusPage() {
           <div className="space-y-4">
             <div className="rounded-3xl bg-white p-6 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-400">
-                {data.empresa?.nombre || "POS SaaS"}
+                {data.empresa?.nombre || "TradeNova"}
               </p>
               <p className="text-xs text-stone-500">{data.sucursal?.nombre}</p>
               <h1 className="mt-3 text-3xl font-black text-stone-900">

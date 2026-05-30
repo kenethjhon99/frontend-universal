@@ -1,5 +1,5 @@
 export const DEFAULT_BRANDING = {
-  nombre_comercial: "Sistema Universal POS",
+  nombre_comercial: "TradeNova",
   nombre_legal: null,
   slogan: "El sistema se adapta a tu negocio, no tu negocio al sistema.",
   logo_principal_url: null,

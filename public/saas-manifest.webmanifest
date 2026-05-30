@@ -1,7 +1,7 @@
 {
-  "name": "POS SaaS",
-  "short_name": "POS SaaS",
-  "description": "Punto de venta + CarWash multi-tenant",
+  "name": "TradeNova",
+  "short_name": "TradeNova",
+  "description": "POS + CarWash SaaS multi-tenant",
   "start_url": "/saas.html#/",
   "scope": "/",
   "display": "standalone",

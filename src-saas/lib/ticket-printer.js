@@ -97,7 +97,7 @@ const buildTicketHtml = (venta, ctx, opts = {}) => {
 </style>
 </head>
 <body>
-<pre>${padCenter(empresa.nombre_legal || "POS SaaS", width)}
+<pre>${padCenter(empresa.nombre_legal || "TradeNova", width)}
 ${padCenter(sucursal.nombre || "", width)}
 ${empresa.nit ? padCenter("NIT: " + empresa.nit, width) + "\n" : ""}${line("=", width)}
 Comp: ${v.numero_comprobante || "-"}
