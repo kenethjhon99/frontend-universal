@@ -8,7 +8,9 @@ import axios from "axios";
 
 const baseURL =
   String(import.meta.env?.VITE_SAAS_API_URL || "").trim() ||
-  "http://localhost:4000/api/saas";
+  (import.meta.env.PROD
+    ? "https://backend-universal-i850.onrender.com/api/saas"
+    : "http://localhost:4000/api/saas");
 
 const publicAxios = axios.create({ baseURL });
 
