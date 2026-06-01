@@ -1,11 +1,21 @@
 import axios from "axios";
 import { clearSession, readSession, writeSession } from "../lib/session-storage";
 
+const resolveApiBaseUrl = () => {
+  const configured = String(import.meta.env.VITE_SAAS_API_URL || "").trim();
+  const productionUrl = "https://backend-universal-i850.onrender.com/api/saas";
+
+  if (import.meta.env.PROD) {
+    if (!configured) return productionUrl;
+    if (configured.includes("tradenova-api.onrender.com")) return productionUrl;
+    return configured.startsWith("//") ? `https:${configured}` : configured;
+  }
+
+  return configured || "http://localhost:4000/api/saas";
+};
+
 const baseURL =
-  String(import.meta.env.VITE_SAAS_API_URL || "").trim() ||
-  (import.meta.env.PROD
-    ? "https://backend-universal-i850.onrender.com/api/saas"
-    : "http://localhost:4000/api/saas");
+  resolveApiBaseUrl();
 
 const apiClient = axios.create({
   baseURL,
