@@ -523,7 +523,7 @@ function VentasPage() {
   };
 
   return (
-    <main className="min-h-screen bg-stone-100">
+    <main className="min-h-screen bg-slate-100">
       <WorkspaceHero
         eyebrow="POS"
         title="Ventas ligadas a caja por sucursal"
@@ -535,7 +535,7 @@ function VentasPage() {
         }
       />
 
-      <section className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[1fr_320px]">
+      <section className="mx-auto grid max-w-7xl gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div className="space-y-6">
           {success ? (
             <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700">
@@ -553,12 +553,12 @@ function VentasPage() {
             </div>
           ) : null}
 
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-4">
             <article className="panel p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Productos
               </p>
-              <p className="mt-3 text-3xl font-black text-stone-900">
+              <p className="mt-3 text-2xl font-black text-stone-900">
                 {summary.items}
               </p>
             </article>
@@ -566,7 +566,7 @@ function VentasPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Unidades
               </p>
-              <p className="mt-3 text-3xl font-black text-stone-900">
+              <p className="mt-3 text-2xl font-black text-stone-900">
                 {summary.unidades}
               </p>
             </article>
@@ -574,7 +574,7 @@ function VentasPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Total
               </p>
-              <p className="mt-3 text-3xl font-black text-stone-900">
+              <p className="mt-3 text-2xl font-black text-stone-900">
                 Q {summary.total.toFixed(2)}
               </p>
             </article>
@@ -582,7 +582,7 @@ function VentasPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Efectivo sistema
               </p>
-              <p className="mt-3 text-3xl font-black text-stone-900">
+              <p className="mt-3 text-2xl font-black text-stone-900">
                 Q {Number(activeCashSummary?.cierre_calculado || 0).toFixed(2)}
               </p>
             </article>

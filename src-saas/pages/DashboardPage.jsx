@@ -25,12 +25,14 @@ import { getReporteGeneral } from "../services/reportesService";
 
 function StatCard({ label, value, helper }) {
   return (
-    <article className="panel p-6">
-      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-400">
+    <article className="panel p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-400">
         {label}
       </p>
-      <p className="mt-4 text-2xl font-black text-stone-900">{value}</p>
-      <p className="mt-3 text-sm leading-6 text-stone-500">{helper}</p>
+      <p className="mt-3 break-words text-xl font-black leading-tight text-stone-900">
+        {value}
+      </p>
+      <p className="mt-2 break-words text-sm leading-6 text-stone-500">{helper}</p>
     </article>
   );
 }
@@ -159,18 +161,18 @@ function DashboardPage() {
   const branchSummary = analytics?.sucursales_resumen || [];
 
   return (
-    <main className="min-h-screen bg-stone-100">
-      <section className="border-b border-stone-200 bg-white/80 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8 lg:flex-row lg:items-end lg:justify-between">
+    <main className="min-h-screen bg-slate-100">
+      <section className="border-b border-slate-200 bg-white/85 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-6 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:py-7">
           <div>
             <WorkspaceLinks />
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700">
               Centro de control
             </p>
-            <h1 className="mt-3 text-4xl font-black text-stone-900">
+            <h1 className="mt-2 text-2xl font-black leading-tight text-stone-900 sm:text-3xl lg:text-4xl">
               Dashboard operativo y gerencial
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-500">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-stone-500">
               El panel principal ya combina provisionamiento SaaS, modulos por
               empresa y lectura gerencial sobre la base nueva, manteniendo tenant
               y sucursal aislados.
@@ -194,7 +196,7 @@ function DashboardPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[1fr_320px]">
+      <section className="mx-auto grid max-w-7xl gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div className="space-y-6">
           {analyticsError ? (
             <div className="rounded-3xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
@@ -202,7 +204,7 @@ function DashboardPage() {
             </div>
           ) : null}
 
-          <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
             {cards.map((card) => (
               <StatCard key={card.label} {...card} />
             ))}

@@ -14,7 +14,7 @@
   }
 
   body {
-    @apply min-h-screen bg-stone-100 text-stone-900 antialiased;
+    @apply min-h-screen bg-slate-100 text-stone-900 antialiased;
   }
 
   #root {
@@ -24,11 +24,11 @@
 
 @layer components {
   .panel {
-    @apply rounded-3xl border border-stone-200 bg-white shadow-panel;
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
   }
 
   .field {
-    @apply w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm text-stone-900 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100;
+    @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-stone-900 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100;
   }
 
   .textarea-field {
@@ -36,19 +36,19 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-2xl bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex items-center justify-center rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-2xl border border-stone-300 bg-white px-5 py-3 text-sm font-semibold text-stone-700 transition hover:border-brand-300 hover:text-brand-700;
+    @apply inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-brand-300 hover:text-brand-700;
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center rounded-2xl border border-rose-200 bg-rose-50 px-5 py-3 text-sm font-semibold text-rose-700 transition hover:border-rose-300 hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-700 transition hover:border-rose-300 hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-stone-300 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-stone-500 transition hover:border-brand-300 hover:text-brand-700;
+    @apply inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] text-stone-500 transition hover:border-brand-300 hover:text-brand-700;
   }
 
   .chip-active {
@@ -56,7 +56,7 @@
   }
 
   .table-shell {
-    @apply overflow-hidden rounded-3xl border border-stone-200 bg-white;
+    @apply overflow-hidden rounded-2xl border border-slate-200 bg-white;
   }
 
   .table-base {
@@ -68,7 +68,7 @@
   }
 
   .table-base th {
-    @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.18em] text-stone-500;
+    @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.1em] text-stone-500;
   }
 
   .table-base td {
@@ -97,6 +97,28 @@
 }
 
 @layer utilities {
+  @media (min-width: 768px) {
+    body:has(.workspace-sidebar) main {
+      padding-left: 3rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .max-w-7xl {
+      max-width: min(100% - 2rem, 1800px) !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .panel {
+      border-radius: 1rem;
+    }
+
+    .table-shell {
+      border-radius: 1rem;
+    }
+  }
+
   .bg-brand-50 {
     background-color: var(--brand-soft) !important;
   }

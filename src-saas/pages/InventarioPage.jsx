@@ -253,7 +253,7 @@ function InventarioPage() {
   };
 
   return (
-    <main className="min-h-screen bg-stone-100">
+    <main className="min-h-screen bg-slate-100">
       <WorkspaceHero
         eyebrow="Inventario"
         title="Stock y movimientos por sucursal"
@@ -265,7 +265,7 @@ function InventarioPage() {
         }
       />
 
-      <section className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[1fr_320px]">
+      <section className="mx-auto grid max-w-7xl gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div className="space-y-6">
           {success ? (
             <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700">
@@ -278,12 +278,12 @@ function InventarioPage() {
             </div>
           ) : null}
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-4">
             <article className="panel p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Productos
               </p>
-              <p className="mt-3 text-3xl font-black text-stone-900">
+              <p className="mt-3 text-2xl font-black text-stone-900">
                 {summary.productos}
               </p>
             </article>
@@ -291,7 +291,7 @@ function InventarioPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Unidades visibles
               </p>
-              <p className="mt-3 text-3xl font-black text-stone-900">
+              <p className="mt-3 text-2xl font-black text-stone-900">
                 {summary.unidades}
               </p>
             </article>
@@ -299,7 +299,7 @@ function InventarioPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Bajo minimo
               </p>
-              <p className="mt-3 text-3xl font-black text-stone-900">
+              <p className="mt-3 text-2xl font-black text-stone-900">
                 {summary.bajoMinimo}
               </p>
             </article>

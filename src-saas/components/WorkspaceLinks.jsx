@@ -7,6 +7,27 @@ import {
 } from "../lib/access";
 import { useAppSession } from "../hooks/useAppSession";
 
+const linkIcon = (label) => {
+  const normalized = String(label || "").toLowerCase();
+  if (normalized.includes("dashboard")) return "D";
+  if (normalized.includes("empresa")) return "E";
+  if (normalized.includes("venta")) return "V";
+  if (normalized.includes("caja")) return "C";
+  if (normalized.includes("compra")) return "P";
+  if (normalized.includes("inventario")) return "I";
+  if (normalized.includes("servicio")) return "S";
+  if (normalized.includes("catalogo")) return "K";
+  if (normalized.includes("finanza")) return "F";
+  if (normalized.includes("reporte")) return "R";
+  if (normalized.includes("usuario")) return "U";
+  if (normalized.includes("rol")) return "L";
+  if (normalized.includes("comprobante")) return "T";
+  if (normalized.includes("auditoria")) return "A";
+  if (normalized.includes("seguridad")) return "G";
+  if (normalized.includes("2fa")) return "2";
+  return "M";
+};
+
 function MenuIcon({ open }) {
   return (
     <span className="flex h-5 w-5 flex-col justify-center gap-1" aria-hidden="true">
@@ -33,6 +54,7 @@ function WorkspaceLinks() {
   const location = useLocation();
   const { session } = useAppSession();
   const [open, setOpen] = useState(false);
+  const [desktopOpen, setDesktopOpen] = useState(false);
 
   const groups = useMemo(
     () =>
@@ -193,11 +215,71 @@ function WorkspaceLinks() {
           (item.to !== "/" && location.pathname.startsWith(item.to))
       )?.label || "Menu";
 
+  const isLinkActive = (item) =>
+    location.pathname === item.to ||
+    (item.to !== "/" && location.pathname.startsWith(item.to));
+
   return (
-    <div className="relative">
+    <>
+      <aside
+        className={`workspace-sidebar fixed inset-y-0 left-0 z-50 hidden border-r border-slate-800 bg-slate-950 text-white shadow-xl transition-[width] duration-200 md:flex ${
+          desktopOpen ? "w-64" : "w-12"
+        }`}
+      >
+        <div className="flex w-full flex-col">
+          <button
+            type="button"
+            className="flex h-12 items-center gap-3 border-b border-white/10 px-3 text-left text-sm font-bold text-white transition hover:bg-white/10"
+            aria-expanded={desktopOpen}
+            aria-label={desktopOpen ? "Ocultar menu" : "Desplegar menu"}
+            onClick={() => setDesktopOpen((current) => !current)}
+          >
+            <MenuIcon open={desktopOpen} />
+            <span className={desktopOpen ? "truncate" : "sr-only"}>TradeNova</span>
+          </button>
+
+          <nav className="flex-1 overflow-y-auto py-3">
+            {groups.map((group) => (
+              <div key={group.title} className="mb-3">
+                {desktopOpen ? (
+                  <p className="px-3 pb-1 text-[10px] font-black uppercase tracking-[0.14em] text-slate-400">
+                    {group.title}
+                  </p>
+                ) : null}
+                <div className="space-y-1 px-1.5">
+                  {group.links.map((item) => {
+                    const isActive = isLinkActive(item);
+                    return (
+                      <Link
+                        key={item.to}
+                        className={`group flex h-9 items-center gap-3 rounded-xl px-2 text-sm font-semibold transition ${
+                          isActive
+                            ? "bg-brand-600 text-white"
+                            : "text-slate-300 hover:bg-white/10 hover:text-white"
+                        }`}
+                        to={item.to}
+                        title={item.label}
+                      >
+                        <span className="grid h-5 w-5 shrink-0 place-items-center rounded-md text-[11px] font-black">
+                          {linkIcon(item.label)}
+                        </span>
+                        <span className={desktopOpen ? "truncate" : "sr-only"}>
+                          {item.label}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </nav>
+        </div>
+      </aside>
+
+      <div className="relative md:hidden">
       <button
         type="button"
-        className="inline-flex items-center gap-3 rounded-2xl border border-stone-200 bg-white px-4 py-2.5 text-sm font-bold text-stone-800 shadow-sm transition hover:border-brand-300 hover:text-brand-800"
+        className="inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-stone-800 shadow-sm transition hover:border-brand-300 hover:text-brand-800"
         aria-expanded={open}
         aria-label={open ? "Cerrar menu" : "Abrir menu"}
         onClick={() => setOpen((current) => !current)}
@@ -214,7 +296,7 @@ function WorkspaceLinks() {
             aria-label="Cerrar menu"
             onClick={() => setOpen(false)}
           />
-          <nav className="absolute left-0 top-full z-40 mt-3 w-[min(92vw,340px)] overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-2xl">
+          <nav className="absolute left-0 top-full z-40 mt-3 w-[min(92vw,340px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
             <div className="max-h-[70vh] overflow-y-auto p-3">
               {groups.map((group) => (
                 <div key={group.title} className="py-2">
@@ -223,10 +305,7 @@ function WorkspaceLinks() {
                   </p>
                   <div className="mt-2 space-y-1">
                     {group.links.map((item) => {
-                      const isActive =
-                        location.pathname === item.to ||
-                        (item.to !== "/" &&
-                          location.pathname.startsWith(item.to));
+                      const isActive = isLinkActive(item);
 
                       return (
                         <Link
@@ -251,6 +330,7 @@ function WorkspaceLinks() {
         </>
       ) : null}
     </div>
+    </>
   );
 }
 

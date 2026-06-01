@@ -242,7 +242,7 @@ function CajaPage() {
   const movementOptions = movementForm.tipo === "INGRESO" ? INGRESOS : EGRESOS;
 
   return (
-    <main className="min-h-screen bg-stone-100">
+    <main className="min-h-screen bg-slate-100">
       <WorkspaceHero
         eyebrow="Caja"
         title="Caja operativa por sucursal"
@@ -250,16 +250,16 @@ function CajaPage() {
         actions={<Link className="btn-secondary" to="/operacion/ventas">Ir a ventas</Link>}
       />
 
-      <section className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[1fr_320px]">
+      <section className="mx-auto grid max-w-7xl gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div className="space-y-6">
           {success ? <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700">{success}</div> : null}
           {error ? <div className="rounded-3xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">{error}</div> : null}
 
-          <div className="grid gap-4 md:grid-cols-4">
-            <article className="panel p-5"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">Apertura</p><p className="mt-3 text-3xl font-black text-stone-900">Q {Number(activeSummary?.monto_apertura || 0).toFixed(2)}</p></article>
-            <article className="panel p-5"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">Efectivo sistema</p><p className="mt-3 text-3xl font-black text-stone-900">Q {Number(activeSummary?.cierre_calculado || 0).toFixed(2)}</p></article>
-            <article className="panel p-5"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">Ventas efectivo</p><p className="mt-3 text-3xl font-black text-stone-900">Q {Number(activeSummary?.total_efectivo || 0).toFixed(2)}</p></article>
-            <article className="panel p-5"><p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">Egresos manuales</p><p className="mt-3 text-3xl font-black text-stone-900">Q {Number(activeSummary?.egresos_manuales || 0).toFixed(2)}</p></article>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-4">
+            <article className="panel p-5"><p className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-400">Apertura</p><p className="mt-3 text-2xl font-black text-stone-900">Q {Number(activeSummary?.monto_apertura || 0).toFixed(2)}</p></article>
+            <article className="panel p-5"><p className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-400">Efectivo sistema</p><p className="mt-3 text-2xl font-black text-stone-900">Q {Number(activeSummary?.cierre_calculado || 0).toFixed(2)}</p></article>
+            <article className="panel p-5"><p className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-400">Ventas efectivo</p><p className="mt-3 text-2xl font-black text-stone-900">Q {Number(activeSummary?.total_efectivo || 0).toFixed(2)}</p></article>
+            <article className="panel p-5"><p className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-400">Egresos manuales</p><p className="mt-3 text-2xl font-black text-stone-900">Q {Number(activeSummary?.egresos_manuales || 0).toFixed(2)}</p></article>
           </div>
 
           <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
