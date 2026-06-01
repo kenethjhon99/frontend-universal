@@ -100,6 +100,11 @@
   @media (min-width: 768px) {
     body:has(.workspace-sidebar) main {
       padding-left: 4.25rem;
+      transition: padding-left 200ms ease;
+    }
+
+    body:has(.workspace-sidebar-expanded) main {
+      padding-left: 16rem;
     }
   }
 
