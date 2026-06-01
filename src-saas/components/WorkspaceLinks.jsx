@@ -222,45 +222,53 @@ function WorkspaceLinks() {
   return (
     <>
       <aside
-        className={`workspace-sidebar fixed inset-y-0 left-0 z-50 hidden border-r border-slate-800 bg-slate-950 text-white shadow-xl transition-[width] duration-200 md:flex ${
-          desktopOpen ? "w-64" : "w-12"
+        className={`workspace-sidebar fixed inset-y-0 left-0 z-50 hidden overflow-hidden border-r border-slate-800 bg-slate-950 text-white shadow-xl transition-[width] duration-200 md:flex ${
+          desktopOpen
+            ? "workspace-sidebar-expanded w-60"
+            : "workspace-sidebar-collapsed w-14"
         }`}
       >
         <div className="flex w-full flex-col">
           <button
             type="button"
-            className="flex h-12 items-center gap-3 border-b border-white/10 px-3 text-left text-sm font-bold text-white transition hover:bg-white/10"
+            className={`flex h-16 items-center border-b border-white/10 text-left text-sm font-bold text-white transition hover:bg-white/10 ${
+              desktopOpen ? "justify-between px-5" : "justify-center px-0"
+            }`}
             aria-expanded={desktopOpen}
             aria-label={desktopOpen ? "Ocultar menu" : "Desplegar menu"}
             onClick={() => setDesktopOpen((current) => !current)}
           >
-            <MenuIcon open={desktopOpen} />
-            <span className={desktopOpen ? "truncate" : "sr-only"}>TradeNova</span>
+            <span className={desktopOpen ? "truncate text-lg" : "sr-only"}>
+              TradeNova
+            </span>
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/30 text-white">
+              <MenuIcon open={desktopOpen} />
+            </span>
           </button>
 
-          <nav className="flex-1 overflow-y-auto py-3">
+          <nav className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden py-4">
             {groups.map((group) => (
-              <div key={group.title} className="mb-3">
+              <div key={group.title} className={desktopOpen ? "mb-5" : "mb-2"}>
                 {desktopOpen ? (
-                  <p className="px-3 pb-1 text-[10px] font-black uppercase tracking-[0.14em] text-slate-400">
+                  <p className="px-5 pb-2 text-[11px] font-black uppercase tracking-[0.14em] text-slate-400">
                     {group.title}
                   </p>
                 ) : null}
-                <div className="space-y-1 px-1.5">
+                <div className={desktopOpen ? "space-y-1 px-3" : "space-y-1 px-2"}>
                   {group.links.map((item) => {
                     const isActive = isLinkActive(item);
                     return (
                       <Link
                         key={item.to}
-                        className={`group flex h-9 items-center gap-3 rounded-xl px-2 text-sm font-semibold transition ${
+                        className={`group flex h-11 items-center rounded-full text-sm font-bold transition ${
                           isActive
-                            ? "bg-brand-600 text-white"
-                            : "text-slate-300 hover:bg-white/10 hover:text-white"
-                        }`}
+                            ? "bg-brand-600 text-white shadow-lg shadow-brand-900/20"
+                            : "text-slate-200 hover:bg-white/10 hover:text-white"
+                        } ${desktopOpen ? "gap-3 px-4" : "justify-center px-0"}`}
                         to={item.to}
                         title={item.label}
                       >
-                        <span className="grid h-5 w-5 shrink-0 place-items-center rounded-md text-[11px] font-black">
+                        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-[12px] font-black">
                           {linkIcon(item.label)}
                         </span>
                         <span className={desktopOpen ? "truncate" : "sr-only"}>
