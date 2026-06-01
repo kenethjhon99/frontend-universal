@@ -148,6 +148,13 @@ const ROLE_PERMISSIONS = {
 
 const getSessionPermissions = (session) => {
   const currentRole = String(session?.user?.rol || "").trim().toUpperCase();
+
+  if (["SUPER_ADMIN", "SUPER_ADMIN_SAAS"].includes(currentRole)) {
+    return (ROLE_PERMISSIONS[currentRole] || []).map((permission) =>
+      String(permission).trim().toLowerCase()
+    );
+  }
+
   return [
     ...new Set([
       ...((Array.isArray(session?.permisos) ? session.permisos : []).map(
