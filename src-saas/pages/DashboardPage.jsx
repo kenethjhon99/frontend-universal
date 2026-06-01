@@ -162,7 +162,7 @@ function DashboardPage() {
 
   return (
     <main className="min-h-screen bg-slate-100">
-      <section className="border-b border-slate-200 bg-white/85 backdrop-blur">
+      <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-6 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:py-7">
           <div>
             <WorkspaceLinks />

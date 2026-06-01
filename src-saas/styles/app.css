@@ -99,12 +99,7 @@
 @layer utilities {
   @media (min-width: 768px) {
     body:has(.workspace-sidebar) main {
-      padding-left: 3.5rem;
-      transition: padding-left 200ms ease;
-    }
-
-    body:has(.workspace-sidebar-expanded) main {
-      padding-left: 15rem;
+      padding-left: 4.25rem;
     }
   }
 

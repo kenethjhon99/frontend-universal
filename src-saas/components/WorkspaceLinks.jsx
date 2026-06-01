@@ -222,10 +222,10 @@ function WorkspaceLinks() {
   return (
     <>
       <aside
-        className={`workspace-sidebar fixed inset-y-0 left-0 z-50 hidden overflow-hidden border-r border-slate-800 bg-slate-950 text-white shadow-xl transition-[width] duration-200 md:flex ${
+        className={`workspace-sidebar fixed left-0 top-0 z-[100] hidden h-screen overflow-hidden border-r border-slate-800 bg-slate-950 text-white shadow-2xl transition-[width] duration-200 md:flex ${
           desktopOpen
-            ? "workspace-sidebar-expanded w-60"
-            : "workspace-sidebar-collapsed w-14"
+            ? "workspace-sidebar-expanded w-64"
+            : "workspace-sidebar-collapsed w-16"
         }`}
       >
         <div className="flex w-full flex-col">

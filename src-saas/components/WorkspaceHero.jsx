@@ -2,7 +2,7 @@ import WorkspaceLinks from "./WorkspaceLinks";
 
 function WorkspaceHero({ eyebrow, title, description, actions = null }) {
   return (
-    <section className="border-b border-slate-200 bg-white/85 backdrop-blur">
+    <section className="border-b border-slate-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:py-7">
         <div className="flex flex-col gap-6">
           <WorkspaceLinks />
