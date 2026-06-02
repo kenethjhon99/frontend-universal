@@ -305,7 +305,7 @@ function InventarioPage() {
             </div>
           ) : null}
 
-          <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
             <article className="panel min-w-0 p-4 sm:p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Productos
@@ -343,7 +343,7 @@ function InventarioPage() {
                     Existencias por sucursal
                   </h2>
                 </div>
-                <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+                <div className="grid min-w-0 gap-3 md:grid-cols-2">
                   <label className="field-group sm:col-span-2">
                     <span className="field-label">Sucursal consultada</span>
                     <select
@@ -365,7 +365,7 @@ function InventarioPage() {
                       ))}
                     </select>
                   </label>
-                  <label className="field-group">
+                  <label className="field-group md:col-span-1">
                     <span className="field-label">Buscar producto</span>
                     <input
                       className="field"
@@ -374,7 +374,7 @@ function InventarioPage() {
                       onChange={(event) => setSearch(event.target.value)}
                     />
                   </label>
-                  <label className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-medium text-stone-700">
+                  <label className="flex min-w-0 items-center gap-3 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-medium text-stone-700">
                     <input
                       checked={onlyLowStock}
                       type="checkbox"
@@ -469,7 +469,7 @@ function InventarioPage() {
                       </p>
                     </div>
 
-                    <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-3">
+                    <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-3">
                       <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
                         <p className="text-xs uppercase tracking-[0.18em] text-stone-400">
                           Stock actual

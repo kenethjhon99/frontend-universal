@@ -14,17 +14,17 @@
   }
 
   body {
-    @apply min-h-screen bg-slate-100 text-stone-900 antialiased;
+    @apply min-h-screen overflow-x-hidden bg-slate-100 text-stone-900 antialiased;
   }
 
   #root {
-    @apply min-h-screen;
+    @apply min-h-screen w-full max-w-full overflow-x-hidden;
   }
 }
 
 @layer components {
   .panel {
-    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+    @apply min-w-0 rounded-2xl border border-slate-200 bg-white shadow-sm;
   }
 
   .field {
@@ -44,15 +44,15 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex min-w-0 items-center justify-center rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-brand-300 hover:text-brand-700;
+    @apply inline-flex min-w-0 items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-stone-700 transition hover:border-brand-300 hover:text-brand-700;
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-700 transition hover:border-rose-300 hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex min-w-0 items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-700 transition hover:border-rose-300 hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .chip {
@@ -64,7 +64,7 @@
   }
 
   .table-shell {
-    @apply max-w-full overflow-hidden rounded-2xl border border-slate-200 bg-white;
+    @apply min-w-0 max-w-full overflow-hidden rounded-2xl border border-slate-200 bg-white;
   }
 
   .table-base {
@@ -128,8 +128,17 @@
     }
 
     main {
+      width: 100%;
       max-width: 100vw;
       overflow-x: hidden;
+    }
+
+    section,
+    article,
+    aside,
+    div,
+    form {
+      min-width: 0;
     }
 
     input,
@@ -146,19 +155,21 @@
     }
 
     .table-shell {
+      max-width: calc(100vw - 1.5rem);
       border-radius: 1rem;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
 
     .table-base {
-      min-width: 620px;
+      min-width: 520px;
     }
 
     .btn-primary,
     .btn-secondary,
     .btn-danger {
       width: 100%;
+      white-space: normal;
     }
   }
 
