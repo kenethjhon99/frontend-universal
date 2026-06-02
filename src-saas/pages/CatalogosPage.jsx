@@ -613,57 +613,69 @@ function CatalogosPage() {
                         </option>
                       ))}
                     </select>
-                    <input
-                      className="field"
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      placeholder="Precio compra"
-                      value={productForm.precio_compra}
-                      onChange={(event) =>
-                        handleProductFieldChange(
-                          "precio_compra",
-                          event.target.value
-                        )
-                      }
-                    />
-                    <input
-                      className="field"
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      placeholder="Precio venta"
-                      value={productForm.precio_venta}
-                      onChange={(event) =>
-                        handleProductFieldChange(
-                          "precio_venta",
-                          event.target.value
-                        )
-                      }
-                    />
-                    <input
-                      className="field"
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      placeholder="Stock inicial"
-                      value={productForm.stock_actual}
-                      onChange={(event) =>
-                        handleProductFieldChange("stock_actual", event.target.value)
-                      }
-                      disabled={Boolean(productForm.id_producto)}
-                    />
-                    <input
-                      className="field"
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      placeholder="Stock minimo"
-                      value={productForm.stock_minimo}
-                      onChange={(event) =>
-                        handleProductFieldChange("stock_minimo", event.target.value)
-                      }
-                    />
+                    <label className="field-group">
+                      <span className="field-label">Precio compra</span>
+                      <input
+                        className="field"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                        value={productForm.precio_compra}
+                        onChange={(event) =>
+                          handleProductFieldChange(
+                            "precio_compra",
+                            event.target.value
+                          )
+                        }
+                      />
+                    </label>
+                    <label className="field-group">
+                      <span className="field-label">Precio venta</span>
+                      <input
+                        className="field"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                        value={productForm.precio_venta}
+                        onChange={(event) =>
+                          handleProductFieldChange(
+                            "precio_venta",
+                            event.target.value
+                          )
+                        }
+                      />
+                    </label>
+                    <label className="field-group">
+                      <span className="field-label">Stock inicial</span>
+                      <input
+                        className="field"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0"
+                        value={productForm.stock_actual}
+                        onChange={(event) =>
+                          handleProductFieldChange("stock_actual", event.target.value)
+                        }
+                        disabled={Boolean(productForm.id_producto)}
+                      />
+                    </label>
+                    <label className="field-group">
+                      <span className="field-label">Stock minimo</span>
+                      <input
+                        className="field"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0"
+                        value={productForm.stock_minimo}
+                        onChange={(event) =>
+                          handleProductFieldChange("stock_minimo", event.target.value)
+                        }
+                      />
+                    </label>
                     <input
                       className="field md:col-span-2 xl:col-span-2"
                       placeholder="Ubicacion en bodega"
