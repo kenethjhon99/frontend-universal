@@ -156,8 +156,29 @@ function CatalogosPage() {
     session?.sucursal_activa?.id_sucursal || ""
   );
 
+  const activeSucursal = session?.sucursal_activa;
   const activeSucursalId = session?.sucursal_activa?.id_sucursal;
+  const effectiveSucursales = useMemo(() => {
+    if (sucursales.length > 0) {
+      return sucursales;
+    }
+
+    if (!activeSucursalId) {
+      return [];
+    }
+
+    return [
+      {
+        id_sucursal: activeSucursalId,
+        codigo: activeSucursal?.codigo || "ACTIVA",
+        nombre: activeSucursal?.nombre || "Sucursal activa",
+      },
+    ];
+  }, [activeSucursal, activeSucursalId, sucursales]);
   const effectiveBranchId = Number(selectedBranchId || activeSucursalId || 0);
+  const effectiveBranch = effectiveSucursales.find(
+    (item) => Number(item.id_sucursal) === Number(effectiveBranchId)
+  );
   const canManageProducts = hasRole(
     session,
     "SUPER_ADMIN",
@@ -510,10 +531,10 @@ function CatalogosPage() {
                       value={selectedBranchId}
                       onChange={(event) => setSelectedBranchId(event.target.value)}
                     >
-                      {sucursales.length === 0 ? (
+                      {effectiveSucursales.length === 0 ? (
                         <option value="">Sin sucursales disponibles</option>
                       ) : null}
-                      {sucursales.map((sucursal) => (
+                      {effectiveSucursales.map((sucursal) => (
                         <option
                           key={sucursal.id_sucursal}
                           value={sucursal.id_sucursal}
@@ -1038,9 +1059,9 @@ function CatalogosPage() {
               <div>
                 <dt className="font-semibold text-stone-900">Consulta productos en</dt>
                 <dd>
-                  {sucursales.find(
-                    (item) => Number(item.id_sucursal) === Number(effectiveBranchId)
-                  )?.nombre || "Sucursal actual"}
+                  {effectiveBranch
+                    ? `${effectiveBranch.codigo} - ${effectiveBranch.nombre}`
+                    : "Sucursal actual"}
                 </dd>
               </div>
               <div>
