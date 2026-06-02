@@ -26,10 +26,16 @@ import { getSucursales } from "../services/sucursalesService";
 const PRODUCT_MODULE_OPTIONS = [
   "POS",
   "INVENTARIO",
-  "COMPRAS",
   "SERVICIOS",
   "CARWASH",
 ];
+
+const PRODUCT_MODULE_LABELS = {
+  POS: "POS / Ventas",
+  INVENTARIO: "Inventario",
+  SERVICIOS: "Servicios",
+  CARWASH: "CarWash",
+};
 
 const createProductForm = (session) => ({
   id_producto: null,
@@ -41,8 +47,10 @@ const createProductForm = (session) => ({
   precio_venta: "0",
   tipo_producto: "PRODUCTO",
   modulo_origen:
-    (session?.modulos || []).find((moduleCode) =>
-      PRODUCT_MODULE_OPTIONS.includes(String(moduleCode || "").trim().toUpperCase())
+    PRODUCT_MODULE_OPTIONS.find((moduleCode) =>
+      (session?.modulos || [])
+        .map((item) => String(item || "").trim().toUpperCase())
+        .includes(moduleCode)
     ) || "POS",
   stock_actual: "0",
   stock_minimo: "0",
@@ -73,8 +81,25 @@ const createProveedorForm = () => ({
   activo: true,
 });
 
-const normalizeError = (error, fallback) =>
-  error.response?.data?.error || fallback;
+const normalizeError = (error, fallback) => {
+  const issues = error.response?.data?.details?.issues;
+
+  if (Array.isArray(issues) && issues.length > 0) {
+    const first = issues[0];
+    const fieldLabels = {
+      modulo_origen: "Modulo del producto",
+      sku: "SKU",
+      nombre: "Nombre del producto",
+      precio_compra: "Precio compra",
+      precio_venta: "Precio venta",
+    };
+    const field = fieldLabels[first.path] || first.path || "Campo";
+
+    return `${field}: ${first.message}`;
+  }
+
+  return error.response?.data?.error || fallback;
+};
 
 const filterRows = (rows, query, fields) => {
   const search = String(query || "").trim().toLowerCase();
@@ -493,7 +518,7 @@ function CatalogosPage() {
         }
       />
 
-      <section className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[1fr_320px]">
+      <section className="mx-auto grid max-w-7xl gap-4 px-3 py-5 sm:gap-6 sm:px-6 sm:py-8 lg:grid-cols-[1fr_320px]">
         <div className="space-y-6">
           {success ? (
             <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700">
@@ -508,7 +533,7 @@ function CatalogosPage() {
           ) : null}
 
           {showProducts ? (
-            <article className="panel p-6">
+            <article className="panel p-4 sm:p-6">
               <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(420px,560px)] xl:items-end">
                 <div className="min-w-0">
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
@@ -587,53 +612,65 @@ function CatalogosPage() {
               {canManageProducts ? (
                 <form className="mt-6 space-y-4" onSubmit={handleProductSubmit}>
                   <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                    <input
-                      className="field"
-                      placeholder="SKU"
-                      value={productForm.sku}
-                      onChange={(event) =>
-                        handleProductFieldChange("sku", event.target.value)
-                      }
-                      required
-                    />
-                    <input
-                      className="field"
-                      placeholder="Codigo de barras"
-                      value={productForm.codigo_barras}
-                      onChange={(event) =>
-                        handleProductFieldChange(
-                          "codigo_barras",
-                          event.target.value
-                        )
-                      }
-                    />
-                    <input
-                      className="field"
-                      placeholder="Nombre del producto"
-                      value={productForm.nombre}
-                      onChange={(event) =>
-                        handleProductFieldChange("nombre", event.target.value)
-                      }
-                      required
-                    />
-                    <select
-                      className="field"
-                      value={productForm.modulo_origen}
-                      onChange={(event) =>
-                        handleProductFieldChange(
-                          "modulo_origen",
-                          event.target.value
-                        )
-                      }
-                    >
-                      {PRODUCT_MODULE_OPTIONS.filter((option) =>
-                        hasAnyModule(session, option)
-                      ).map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
+                    <label className="field-group">
+                      <span className="field-label">SKU</span>
+                      <input
+                        className="field"
+                        placeholder="Codigo interno"
+                        value={productForm.sku}
+                        onChange={(event) =>
+                          handleProductFieldChange("sku", event.target.value)
+                        }
+                        required
+                      />
+                    </label>
+                    <label className="field-group">
+                      <span className="field-label">Codigo de barras</span>
+                      <input
+                        className="field"
+                        placeholder="Opcional"
+                        value={productForm.codigo_barras}
+                        onChange={(event) =>
+                          handleProductFieldChange(
+                            "codigo_barras",
+                            event.target.value
+                          )
+                        }
+                      />
+                    </label>
+                    <label className="field-group">
+                      <span className="field-label">Nombre</span>
+                      <input
+                        className="field"
+                        placeholder="Nombre del producto"
+                        value={productForm.nombre}
+                        onChange={(event) =>
+                          handleProductFieldChange("nombre", event.target.value)
+                        }
+                        required
+                      />
+                    </label>
+                    <label className="field-group">
+                      <span className="field-label">Area del producto</span>
+                      <select
+                        className="field"
+                        value={productForm.modulo_origen}
+                        onChange={(event) =>
+                          handleProductFieldChange(
+                            "modulo_origen",
+                            event.target.value
+                          )
+                        }
+                      >
+                        {PRODUCT_MODULE_OPTIONS.filter((option) =>
+                          hasAnyModule(session, option)
+                        ).map((option) => (
+                          <option key={option} value={option}>
+                            {PRODUCT_MODULE_LABELS[option] || option}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                     <label className="field-group">
                       <span className="field-label">Precio compra</span>
                       <input
@@ -729,7 +766,7 @@ function CatalogosPage() {
                       {productError}
                     </div>
                   ) : null}
-                  <div className="flex flex-wrap gap-3">
+                  <div className="grid gap-3 sm:flex sm:flex-wrap">
                     <button
                       className="btn-primary"
                       disabled={productSaving}

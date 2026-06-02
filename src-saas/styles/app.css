@@ -64,11 +64,11 @@
   }
 
   .table-shell {
-    @apply overflow-hidden rounded-2xl border border-slate-200 bg-white;
+    @apply max-w-full overflow-hidden rounded-2xl border border-slate-200 bg-white;
   }
 
   .table-base {
-    @apply min-w-full divide-y divide-stone-200 text-sm;
+    @apply w-full min-w-full divide-y divide-stone-200 text-sm;
   }
 
   .table-base thead {
@@ -123,12 +123,33 @@
   }
 
   @media (max-width: 767px) {
+    body {
+      overflow-x: hidden;
+    }
+
+    main {
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
     .panel {
       border-radius: 1rem;
     }
 
     .table-shell {
       border-radius: 1rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table-base {
+      min-width: 620px;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-danger {
+      width: 100%;
     }
   }
 
