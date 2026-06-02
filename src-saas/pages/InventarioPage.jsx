@@ -385,7 +385,69 @@ function InventarioPage() {
                 </div>
               </div>
 
-              <div className="table-shell mt-6 overflow-x-auto">
+              <div className="mt-5 space-y-3 md:hidden">
+                {loadingStock ? (
+                  <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-stone-500">
+                    Cargando inventario...
+                  </div>
+                ) : filteredStock.length === 0 ? (
+                  <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-stone-500">
+                    No hay productos para el filtro actual.
+                  </div>
+                ) : (
+                  filteredStock.map((row) => (
+                    <button
+                      key={row.id_stock}
+                      className={`w-full rounded-2xl border p-4 text-left transition ${
+                        Number(row.id_producto) === Number(selectedProductId)
+                          ? "border-brand-300 bg-brand-50"
+                          : "border-slate-200 bg-white"
+                      }`}
+                      type="button"
+                      onClick={() => setSelectedProductId(row.id_producto)}
+                    >
+                      <div className="min-w-0">
+                        <p className="break-words text-base font-black text-stone-900">
+                          {row.nombre}
+                        </p>
+                        <p className="mt-1 break-words text-xs text-stone-500">
+                          {row.sku || "Sin SKU"}
+                          {row.codigo_barras ? ` | ${row.codigo_barras}` : ""}
+                        </p>
+                      </div>
+                      <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                        <div className="rounded-xl bg-slate-50 p-3">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-stone-400">
+                            Stock
+                          </p>
+                          <p className="mt-1 font-black text-stone-900">
+                            {Number(row.stock_actual || 0)}
+                          </p>
+                        </div>
+                        <div className="rounded-xl bg-slate-50 p-3">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-stone-400">
+                            Minimo
+                          </p>
+                          <p className="mt-1 font-black text-stone-900">
+                            {Number(row.stock_minimo || 0)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <span className="badge-muted">{row.modulo_origen}</span>
+                        {row.bajo_minimo ? (
+                          <span className="badge-warning">Bajo minimo</span>
+                        ) : null}
+                      </div>
+                      <p className="mt-3 break-words text-sm text-stone-500">
+                        {row.ubicacion || "Sin ubicacion"}
+                      </p>
+                    </button>
+                  ))
+                )}
+              </div>
+
+              <div className="table-shell mt-6 hidden overflow-x-auto md:block">
                 <table className="table-base">
                   <thead>
                     <tr>
@@ -548,7 +610,44 @@ function InventarioPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
                   Kardex reciente
                 </p>
-                <div className="table-shell mt-4 overflow-x-auto">
+                <div className="mt-4 space-y-3 md:hidden">
+                  {loadingMovimientos ? (
+                    <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-stone-500">
+                      Cargando movimientos...
+                    </div>
+                  ) : movimientos.length === 0 ? (
+                    <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-stone-500">
+                      No hay movimientos recientes.
+                    </div>
+                  ) : (
+                    movimientos.map((item) => (
+                      <article
+                        key={item.id_movimiento}
+                        className="rounded-2xl border border-slate-200 bg-white p-4"
+                      >
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className={item.tipo === "SALIDA" ? "badge-warning" : item.tipo === "AJUSTE" ? "badge-muted" : "badge-success"}>
+                            {item.tipo}
+                          </span>
+                          <span className="text-sm font-black text-stone-900">
+                            {Number(item.cantidad || 0)}
+                          </span>
+                        </div>
+                        <p className="mt-3 break-words font-semibold text-stone-900">
+                          {item.producto_nombre}
+                        </p>
+                        <p className="mt-1 text-xs text-stone-500">
+                          {new Date(item.created_at).toLocaleString("es-GT")}
+                        </p>
+                        <p className="mt-3 break-words text-sm text-stone-500">
+                          {item.observacion || "Sin observacion"}
+                        </p>
+                      </article>
+                    ))
+                  )}
+                </div>
+
+                <div className="table-shell mt-4 hidden overflow-x-auto md:block">
                   <table className="table-base">
                     <thead>
                       <tr>
