@@ -25,8 +25,14 @@ const createMovementForm = () => ({
   observacion: "",
 });
 
-const normalizeError = (error, fallback) =>
-  error.response?.data?.error || fallback;
+const normalizeError = (error, fallback) => {
+  const issues = error.response?.data?.details?.issues;
+  if (Array.isArray(issues) && issues.length > 0) {
+    const first = issues[0];
+    return `${first.path || "Campo"}: ${first.message}`;
+  }
+  return error.response?.data?.error || fallback;
+};
 
 function InventarioPage() {
   const { session } = useAppSession();
@@ -54,8 +60,29 @@ function InventarioPage() {
     "ADMIN_EMPRESA",
     "ENCARGADO_SUCURSAL"
   );
+  const activeSucursal = session?.sucursal_activa;
   const activeSucursalId = session?.sucursal_activa?.id_sucursal;
+  const effectiveSucursales = useMemo(() => {
+    if (sucursales.length > 0) {
+      return sucursales;
+    }
+
+    if (!activeSucursalId) {
+      return [];
+    }
+
+    return [
+      {
+        id_sucursal: activeSucursalId,
+        codigo: activeSucursal?.codigo || "ACTIVA",
+        nombre: activeSucursal?.nombre || "Sucursal activa",
+      },
+    ];
+  }, [activeSucursal, activeSucursalId, sucursales]);
   const effectiveBranchId = Number(selectedBranchId || activeSucursalId || 0);
+  const effectiveBranch = effectiveSucursales.find(
+    (item) => Number(item.id_sucursal) === Number(effectiveBranchId)
+  );
 
   const loadStock = async () => {
     try {
@@ -265,8 +292,8 @@ function InventarioPage() {
         }
       />
 
-      <section className="mx-auto grid max-w-7xl gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_300px]">
-        <div className="space-y-6">
+      <section className="mx-auto grid max-w-7xl min-w-0 gap-4 overflow-hidden px-3 py-5 sm:gap-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+        <div className="min-w-0 space-y-6">
           {success ? (
             <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700">
               {success}
@@ -278,8 +305,8 @@ function InventarioPage() {
             </div>
           ) : null}
 
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-4">
-            <article className="panel p-5">
+          <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <article className="panel min-w-0 p-4 sm:p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Productos
               </p>
@@ -287,7 +314,7 @@ function InventarioPage() {
                 {summary.productos}
               </p>
             </article>
-            <article className="panel p-5">
+            <article className="panel min-w-0 p-4 sm:p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Unidades visibles
               </p>
@@ -295,7 +322,7 @@ function InventarioPage() {
                 {summary.unidades}
               </p>
             </article>
-            <article className="panel p-5">
+            <article className="panel min-w-0 p-4 sm:p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
                 Bajo minimo
               </p>
@@ -305,10 +332,10 @@ function InventarioPage() {
             </article>
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-            <article className="panel p-6">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <div>
+          <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+            <article className="panel min-w-0 overflow-hidden p-4 sm:p-6">
+              <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,520px)] lg:items-end">
+                <div className="min-w-0">
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
                     Stock actual
                   </p>
@@ -316,27 +343,37 @@ function InventarioPage() {
                     Existencias por sucursal
                   </h2>
                 </div>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <select
-                    className="field sm:min-w-[220px]"
-                    value={selectedBranchId}
-                    onChange={(event) => setSelectedBranchId(event.target.value)}
-                  >
-                    {sucursales.map((sucursal) => (
-                      <option
-                        key={sucursal.id_sucursal}
-                        value={sucursal.id_sucursal}
-                      >
-                        {sucursal.codigo} - {sucursal.nombre}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    className="field"
-                    placeholder="Buscar producto"
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                  />
+                <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+                  <label className="field-group sm:col-span-2">
+                    <span className="field-label">Sucursal consultada</span>
+                    <select
+                      aria-label="Sucursal consultada para inventario"
+                      className="field"
+                      value={selectedBranchId}
+                      onChange={(event) => setSelectedBranchId(event.target.value)}
+                    >
+                      {effectiveSucursales.length === 0 ? (
+                        <option value="">Sin sucursales disponibles</option>
+                      ) : null}
+                      {effectiveSucursales.map((sucursal) => (
+                        <option
+                          key={sucursal.id_sucursal}
+                          value={sucursal.id_sucursal}
+                        >
+                          {sucursal.codigo} - {sucursal.nombre}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="field-group">
+                    <span className="field-label">Buscar producto</span>
+                    <input
+                      className="field"
+                      placeholder="Nombre, SKU o codigo"
+                      value={search}
+                      onChange={(event) => setSearch(event.target.value)}
+                    />
+                  </label>
                   <label className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-medium text-stone-700">
                     <input
                       checked={onlyLowStock}
@@ -413,8 +450,8 @@ function InventarioPage() {
               </div>
             </article>
 
-            <div className="space-y-6">
-              <article className="panel p-6">
+            <div className="min-w-0 space-y-5">
+              <article className="panel min-w-0 overflow-hidden p-4 sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
                   Producto seleccionado
                 </p>
@@ -432,7 +469,7 @@ function InventarioPage() {
                       </p>
                     </div>
 
-                    <div className="grid gap-3 md:grid-cols-3">
+                    <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-3">
                       <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
                         <p className="text-xs uppercase tracking-[0.18em] text-stone-400">
                           Stock actual
@@ -465,7 +502,7 @@ function InventarioPage() {
                           <h3 className="text-sm font-bold text-stone-900">
                             Configuracion de stock
                           </h3>
-                          <div className="grid gap-3 md:grid-cols-3">
+                          <div className="grid min-w-0 gap-3 md:grid-cols-3">
                             <input className="field" type="number" min="0" step="0.01" placeholder="Stock minimo" value={configForm.stock_minimo} onChange={(event) => setConfigForm((prev) => ({ ...prev, stock_minimo: event.target.value }))} />
                             <input className="field" type="number" min="0" step="0.01" placeholder="Stock maximo" value={configForm.stock_maximo} onChange={(event) => setConfigForm((prev) => ({ ...prev, stock_maximo: event.target.value }))} />
                             <input className="field" placeholder="Ubicacion" value={configForm.ubicacion} onChange={(event) => setConfigForm((prev) => ({ ...prev, ubicacion: event.target.value }))} />
@@ -479,7 +516,7 @@ function InventarioPage() {
                           <h3 className="text-sm font-bold text-stone-900">
                             Movimiento manual
                           </h3>
-                          <div className="grid gap-3 md:grid-cols-2">
+                          <div className="grid min-w-0 gap-3 md:grid-cols-2">
                             <select className="field" value={movementForm.tipo} onChange={(event) => setMovementForm((prev) => ({ ...prev, tipo: event.target.value }))}>
                               <option value="ENTRADA">Entrada</option>
                               <option value="SALIDA">Salida</option>
@@ -507,7 +544,7 @@ function InventarioPage() {
                 )}
               </article>
 
-              <article className="panel p-6">
+              <article className="panel min-w-0 overflow-hidden p-4 sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
                   Kardex reciente
                 </p>
@@ -555,7 +592,7 @@ function InventarioPage() {
           </div>
         </div>
 
-        <aside className="space-y-6">
+        <aside className="min-w-0 space-y-5">
           <div className="panel p-6">
             <SucursalSwitcher />
           </div>
@@ -571,12 +608,9 @@ function InventarioPage() {
               Consultando:
             </p>
             <p className="mt-1 text-sm text-stone-600">
-              {sucursales.find(
-                (item) => Number(item.id_sucursal) === Number(effectiveBranchId)
-              )?.codigo} -{" "}
-              {sucursales.find(
-                (item) => Number(item.id_sucursal) === Number(effectiveBranchId)
-              )?.nombre || "Sucursal actual"}
+              {effectiveBranch
+                ? `${effectiveBranch.codigo} - ${effectiveBranch.nombre}`
+                : "Sucursal actual"}
             </p>
             <p className="mt-3 text-sm leading-6 text-stone-500">
               Si cambias de sucursal, las existencias y movimientos se recalculan
