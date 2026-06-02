@@ -488,8 +488,8 @@ function CatalogosPage() {
 
           {showProducts ? (
             <article className="panel p-6">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <div>
+              <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(420px,560px)] xl:items-end">
+                <div className="min-w-0">
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
                     Productos
                   </p>
@@ -501,27 +501,38 @@ function CatalogosPage() {
                     controla por sucursal.
                   </p>
                 </div>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <select
-                    className="field sm:min-w-[220px]"
-                    value={selectedBranchId}
-                    onChange={(event) => setSelectedBranchId(event.target.value)}
-                  >
-                    {sucursales.map((sucursal) => (
-                      <option
-                        key={sucursal.id_sucursal}
-                        value={sucursal.id_sucursal}
-                      >
-                        {sucursal.codigo} - {sucursal.nombre}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    className="field lg:max-w-sm"
-                    placeholder="Buscar por nombre, SKU o codigo"
-                    value={productSearch}
-                    onChange={(event) => setProductSearch(event.target.value)}
-                  />
+                <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(220px,0.9fr)_minmax(260px,1.1fr)]">
+                  <label className="field-group">
+                    <span className="field-label">Sucursal consultada</span>
+                    <select
+                      aria-label="Sucursal consultada para productos y stock"
+                      className="field"
+                      value={selectedBranchId}
+                      onChange={(event) => setSelectedBranchId(event.target.value)}
+                    >
+                      {sucursales.length === 0 ? (
+                        <option value="">Sin sucursales disponibles</option>
+                      ) : null}
+                      {sucursales.map((sucursal) => (
+                        <option
+                          key={sucursal.id_sucursal}
+                          value={sucursal.id_sucursal}
+                        >
+                          {sucursal.codigo} - {sucursal.nombre}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="field-group">
+                    <span className="field-label">Buscar producto</span>
+                    <input
+                      aria-label="Buscar producto por nombre SKU o codigo"
+                      className="field"
+                      placeholder="Nombre, SKU o codigo"
+                      value={productSearch}
+                      onChange={(event) => setProductSearch(event.target.value)}
+                    />
+                  </label>
                 </div>
               </div>
 

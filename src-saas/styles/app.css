@@ -31,6 +31,14 @@
     @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-stone-900 outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100;
   }
 
+  .field-label {
+    @apply text-xs font-semibold uppercase tracking-[0.16em] text-stone-400;
+  }
+
+  .field-group {
+    @apply flex min-w-0 flex-col gap-2;
+  }
+
   .textarea-field {
     @apply field min-h-[112px] resize-y;
   }
