@@ -132,6 +132,15 @@
       overflow-x: hidden;
     }
 
+    input,
+    select,
+    textarea,
+    button {
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
     .panel {
       border-radius: 1rem;
     }

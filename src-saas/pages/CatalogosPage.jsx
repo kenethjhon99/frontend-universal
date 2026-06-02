@@ -518,8 +518,8 @@ function CatalogosPage() {
         }
       />
 
-      <section className="mx-auto grid max-w-7xl gap-4 px-3 py-5 sm:gap-6 sm:px-6 sm:py-8 lg:grid-cols-[1fr_320px]">
-        <div className="space-y-6">
+      <section className="mx-auto grid max-w-7xl min-w-0 gap-4 overflow-hidden px-3 py-5 sm:gap-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="min-w-0 space-y-6">
           {success ? (
             <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700">
               {success}
@@ -533,7 +533,7 @@ function CatalogosPage() {
           ) : null}
 
           {showProducts ? (
-            <article className="panel p-4 sm:p-6">
+            <article className="panel min-w-0 overflow-hidden p-4 sm:p-6">
               <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(420px,560px)] xl:items-end">
                 <div className="min-w-0">
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
@@ -610,8 +610,8 @@ function CatalogosPage() {
               </div>
 
               {canManageProducts ? (
-                <form className="mt-6 space-y-4" onSubmit={handleProductSubmit}>
-                  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                <form className="mt-6 min-w-0 space-y-4" onSubmit={handleProductSubmit}>
+                  <div className="grid min-w-0 gap-3 md:grid-cols-2 xl:grid-cols-4">
                     <label className="field-group">
                       <span className="field-label">SKU</span>
                       <input
@@ -766,7 +766,7 @@ function CatalogosPage() {
                       {productError}
                     </div>
                   ) : null}
-                  <div className="grid gap-3 sm:flex sm:flex-wrap">
+                  <div className="grid min-w-0 gap-3 sm:flex sm:flex-wrap">
                     <button
                       className="btn-primary"
                       disabled={productSaving}
